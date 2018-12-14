@@ -15,7 +15,7 @@ class pgsql (
     $has_mounts = ( $mountpoint != "" )
 
     Package["postgresql"] {
-      ensure => intalled,
+      ensure => installed,
     }
     Package["postgresql-${pgsql_version}"] {
       ensure => latest,
