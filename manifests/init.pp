@@ -27,16 +27,18 @@ class pgsql (
     }
 
     file { ["/etc/postgresql/${pgsql_version}/main/postgresql.conf", "/etc/postgresql/${pgsql_version}/main/pg_hba.conf"]:
-      owner => "postgres",
-      group => "postgres",
+      owner   => "postgres",
+      group   => "postgres",
+      require => File["/etc/postgresql"],
+      notify  => Service["postgresql"],
     }
 
     File["/etc/postgresql/${pgsql_version}/main/postgresql.conf"] {
-      mode => "644",
+      mode    => "644",
       content => epp("pgsql/postgresql.conf.epp"),
     }
     File["/etc/postgresql/${pgsql_version}/main/pg_hba.conf"] {
-      mode => "640",
+      mode    => "640",
       content => epp("pgsql/pg_hba.conf.epp"),
     }
 
