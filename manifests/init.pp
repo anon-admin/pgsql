@@ -2,6 +2,8 @@ class pgsql (
   $has_pgsqld = $cconf::has_pgsqld,
   $mountpoint = $cconf::mountpoint,
   $pgsql_version = "10",
+  $git_server = $cconf::git_server,
+  $nextcloud_server = $cconf::nextcloud_server,
 ) inherits cconf {
 
   package { ["postgresql","postgresql-${pgsql_version}"]: }
@@ -11,6 +13,15 @@ class pgsql (
   file { "/etc/monit/conf-enabled/postgresql": }
 
   if ( $has_pgsqld ) {
+
+    if ( $git_server != "" ) {
+      $git_serverip = $cconf::git_serverip
+    }
+
+    if ( $nextcloud_server != "" ) {
+      $nextcloud_serverip = $cconf::nextcloud_serverip
+    }
+
 
     $has_mounts = ( $mountpoint != "" )
 

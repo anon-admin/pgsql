@@ -74,8 +74,12 @@
 
 # gitlab@gitlab_database FATAL:  no pg_hba.conf entry for host "192.168.0.4", user "gitlab", database "gitlab_database", SSL off
 # host       DATABASE  USER  ADDRESS  METHOD  [OPTIONS]
-host gitlab_database gitlab 192.168.0.4/32 md5
-host nextcloud nextuser 192.168.0.6/32 md5
+<% if ( $pgsql::git_server != "" ) { -%>
+host gitlab_database gitlab <%= $pgsql::git_serverip %>/32 md5
+<% } -%>
+<% if ( $pgsql::nextcloud_server != "" ) { -%>
+host nextcloud nextuser <%= $pgsql::nextcloud_serverip %>/32 md5
+<% } -%>
 
 
 # DO NOT DISABLE!
